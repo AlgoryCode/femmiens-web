@@ -1,26 +1,242 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Ana palet — asil, kadınsı, belirgin */
+  --background: #fdf2f0;
+  --foreground: #4a2c35;
+  --surface: #fff5f3;
+  --surface-2: #f8e8ef;
+
+  /* Toz gülü & lavanta */
+  --fem-rose: #c9788a;
+  --fem-rose-light: #e8b4c0;
+  --fem-rose-pale: #f5d5dc;
+  --fem-lavender: #b8a0c4;
+  --fem-lavender-light: #ddd0e8;
+  --fem-lavender-pale: #ede5f4;
+
+  /* Sıcak vurgular */
+  --fem-gold: #c9a87c;
+  --fem-gold-light: #e8d5b8;
+  --fem-plum: #7a4a5e;
+
+  /* Cam efekti — pembemsi */
+  --glass-bg: rgba(255, 245, 243, 0.72);
+  --glass-border: rgba(201, 120, 138, 0.28);
+  --glass-shine: rgba(255, 255, 255, 0.9);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fem-rose: var(--fem-rose);
+  --color-fem-rose-light: var(--fem-rose-light);
+  --color-fem-rose-pale: var(--fem-rose-pale);
+  --color-fem-lavender: var(--fem-lavender);
+  --color-fem-lavender-light: var(--fem-lavender-light);
+  --color-fem-lavender-pale: var(--fem-lavender-pale);
+  --color-fem-gold: var(--fem-gold);
+  --color-fem-gold-light: var(--fem-gold-light);
+  --color-fem-plum: var(--fem-plum);
   --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-playfair);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Arka plan — gül ve lavanta orb'ları */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(
+    160deg,
+    #fdf2f0 0%,
+    #f8e8ef 40%,
+    #ede5f4 100%
+  );
+}
+
+.bg-orbs::before,
+.bg-orbs::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: float 20s ease-in-out infinite;
+}
+
+.bg-orbs::before {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #e8b4c0 0%, transparent 65%);
+  opacity: 0.7;
+  top: -150px;
+  right: -100px;
+}
+
+.bg-orbs::after {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, #c4aed4 0%, transparent 65%);
+  opacity: 0.55;
+  bottom: -100px;
+  left: -80px;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(20px, -20px) scale(1.05);
+  }
+}
+
+/* Bölüm arka planları */
+.section-rose {
+  background: linear-gradient(
+    180deg,
+    rgba(245, 213, 220, 0.45) 0%,
+    transparent 100%
+  );
+}
+
+.section-lavender {
+  background: linear-gradient(
+    180deg,
+    rgba(221, 208, 232, 0.4) 0%,
+    transparent 100%
+  );
+}
+
+.section-warm {
+  background: linear-gradient(
+    180deg,
+    rgba(232, 213, 184, 0.35) 0%,
+    transparent 100%
+  );
+}
+
+/* Cam efekti */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 8px 32px rgba(201, 120, 138, 0.1),
+    inset 0 1px 0 var(--glass-shine);
+}
+
+.glass-rose {
+  background: rgba(245, 213, 220, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(201, 120, 138, 0.3);
+  box-shadow: 0 4px 24px rgba(201, 120, 138, 0.12);
+}
+
+.glass-lavender {
+  background: rgba(237, 229, 244, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(184, 160, 196, 0.35);
+  box-shadow: 0 4px 24px rgba(184, 160, 196, 0.1);
+}
+
+.glass-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: shine 6s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0%,
+  100% {
+    left: -100%;
+  }
+  50% {
+    left: 150%;
+  }
+}
+
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(201, 120, 138, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184, 160, 196, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #c9788a 0%, #a85f72 100%);
+  color: #fff;
+  box-shadow:
+    0 4px 20px rgba(201, 120, 138, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #d4889a 0%, #b86a7e 100%);
+  box-shadow: 0 6px 28px rgba(201, 120, 138, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #b8a0c4 0%, #9a82ae 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(184, 160, 196, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  box-shadow: 0 6px 24px rgba(184, 160, 196, 0.4);
+  transform: translateY(-1px);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #c9788a 0%, #b8a0c4 60%, #c9a87c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.badge-rose {
+  background: linear-gradient(135deg, #f5d5dc, #e8b4c0);
+  color: #7a4a5e;
+  border: 1px solid rgba(201, 120, 138, 0.25);
+}
+
+.badge-lavender {
+  background: linear-gradient(135deg, #ede5f4, #ddd0e8);
+  color: #6a4a72;
+  border: 1px solid rgba(184, 160, 196, 0.3);
 }
